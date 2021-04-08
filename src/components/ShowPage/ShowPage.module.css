@@ -1,0 +1,14 @@
+.main {
+  width: 100%;
+  display: flex;
+  min-height: 100vh;
+  background-color: rgb(156, 154, 154);
+  padding: 15px;
+}
+.imgBlock {
+  width: 200px;
+}
+
+.showBlock {
+  margin-left: 40px;
+}
