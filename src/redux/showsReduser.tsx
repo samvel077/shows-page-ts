@@ -3,19 +3,22 @@ import * as actionTypes from "./showsActionTypes";
 const initState = {
   loading: false,
   successMessage: null,
-  error: null,
-  shows: [],
-  genres: [],
-  show: null,
+  error: null as null | string,
+  shows: [] as Array<any>,
+  genres: [] as Array<any>,
+  show: null as null | any,
 };
+type InitStateType = typeof initState;
 
-const showsReduser = (state = initState, action) => {
+const showsReduser = (
+  state = initState,
+  action: actionTypes.ShowsTypes
+): InitStateType => {
   switch (action.type) {
     case actionTypes.LOADING: {
       return {
         ...state,
         loading: true,
-        // show: null,
       };
     }
     case actionTypes.FAILURE: {
@@ -33,10 +36,10 @@ const showsReduser = (state = initState, action) => {
       for (let value of getGenresArr) {
         genresArr.push(...value);
       }
-      genresArr = [...new Set(genresArr)];
+      genresArr = Array.from(new Set(genresArr));
 
       const sortedGenresArrWithScorr = action.payload.sort(
-        (a, b) => a.score < b.score
+        (a, b): any => a.score < b.score
       );
 
       let genres = [];
@@ -60,7 +63,7 @@ const showsReduser = (state = initState, action) => {
       let collapsedGenres = [...state.genres];
       if (collapsedGenres.length >= 1) {
         let genresIndex = collapsedGenres.findIndex(
-          (item) => item.name === action.payload.type
+          (item: any) => item.name === action.payload.type
         );
         if (collapsedGenres.length > 0 && genresIndex >= 0) {
           collapsedGenres[genresIndex].collapsed =
@@ -119,7 +122,7 @@ const showsReduser = (state = initState, action) => {
         return item.show.name !== action.payload;
       });
 
-      const newGenres = state.genres.filter((item) => {
+      const newGenres = state.genres.filter((item: any) => {
         return item.name !== action.payload;
       });
 

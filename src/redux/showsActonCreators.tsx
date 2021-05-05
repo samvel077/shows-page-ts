@@ -1,13 +1,23 @@
 import axios from "axios";
+import { Action } from "redux";
+import { ThunkAction } from "redux-thunk";
 import * as actionTypes from "./showsActionTypes";
+import { AppStateType } from "./store";
 
 const apiUrl = "http://api.tvmaze.com";
 
-let wait = (ms) => {
+type ThunkType = ThunkAction<
+  Promise<void> | void,
+  AppStateType,
+  unknown,
+  Action<string>
+>;
+
+let wait = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-export const searchItems = (value) => {
+export const searchItems = (value: string): ThunkType => {
   return async (dispatch) => {
     try {
       if (value) {
@@ -27,7 +37,7 @@ export const searchItems = (value) => {
   };
 };
 
-export const handleCollapse = (data) => {
+export const handleCollapse = (data: any): ThunkType => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.LOADING });
 
@@ -39,7 +49,7 @@ export const handleCollapse = (data) => {
   };
 };
 
-export const starItems = (name) => {
+export const starItems = (name: string): ThunkType => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.LOADING });
 
@@ -51,7 +61,7 @@ export const starItems = (name) => {
   };
 };
 
-export const removeItem = (id) => {
+export const removeItem = (id: number): ThunkType => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.LOADING });
 
@@ -63,7 +73,7 @@ export const removeItem = (id) => {
   };
 };
 
-export const getShow = (id) => {
+export const getShow = (id: number): ThunkType => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.LOADING });
 
@@ -75,7 +85,7 @@ export const getShow = (id) => {
   };
 };
 
-export const removeItems = (genre) => {
+export const removeItems = (genre: string): ThunkType => {
   return (dispatch) => {
     dispatch({ type: actionTypes.LOADING });
     dispatch({

@@ -3,10 +3,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchItems } from "../../redux/showsActonCreators";
 import { Spinner, InputGroup, FormControl } from "react-bootstrap";
 import classes from "./Search.module.css";
+import { AppStateType } from "./../../redux/store";
+import { RouteComponentProps } from "react-router";
 
-const Search = () => {
+type MapDispatchPropsType = {
+  searchItems: (value: any) => void;
+};
+
+type MapStatePropsType = {
+  loading: boolean;
+};
+
+type pathParamsType = {
+  // id: string;
+};
+
+type OwnPropsType = {};
+
+type StateType = {
+  value: "";
+};
+
+type PropsType = MapStatePropsType &
+  MapDispatchPropsType &
+  OwnPropsType &
+  RouteComponentProps<pathParamsType>;
+
+const Search: React.FC<PropsType | StateType> = () => {
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.showsReduser);
+  const { loading } = useSelector((state: AppStateType) => state.showsReduser);
 
   const [value, setValue] = useState("");
 
@@ -16,7 +41,7 @@ const Search = () => {
     //eslint-disable-next-line
   }, [value]);
 
-  const handleOnKeyDown = (event) => {
+  const handleOnKeyDown = (event: React.KeyboardEvent): void => {
     if (event.key === "Enter") {
       event.preventDefault();
       dispatch(searchItems(value));
@@ -31,7 +56,7 @@ const Search = () => {
             placeholder="Search..."
             aria-label="Search"
             aria-describedby="basic-addon1"
-            size="md"
+            size="lg"
             onChange={(event) => {
               setValue(event.target.value);
             }}
